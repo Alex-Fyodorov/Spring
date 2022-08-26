@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student by ID</title>
+</head>
+<body>
+<h1>Student by ID.</h1>
+<h3 th:text="${'ID: ' + student.id}"/>
+<h3 th:text="${'Name: ' + student.name}"/>
+<a th:href="@{'/students'}">Return to students page</a>
+</body>
+</html>
