@@ -27,6 +27,9 @@
         <module>lesson4-fisunov</module>
         <module>lesson4-spring-boot</module>
         <module>Test</module>
+        <module>lesson5-fisunov</module>
+        <module>Test</module>
+        <module>lesson</module>
     </modules>
 
     <dependencies>

@@ -10,19 +10,15 @@
         <module name="lesson1-servlet-api" />
         <module name="lesson2-spring-basics" />
         <module name="lesson3-spring-mvc" />
-        <module name="lesson4-fisunov" />
         <module name="lesson4-spring-boot" />
-      </profile>
-      <profile name="Annotation profile for Unknown" enabled="true">
-        <sourceOutputDir name="../../target/generated-sources/annotations" />
-        <sourceTestOutputDir name="../../target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="wrapper" />
+        <module name="lesson5-fisunov" />
+        <module name="lesson4-fisunov" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="lesson3-fisunov" target="14" />
       <module name="Test" target="14" />
+      <module name="wrapper" target="1.5" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -33,6 +29,7 @@
       <module name="lesson3-spring-mvc" options="-parameters" />
       <module name="lesson4-fisunov" options="-parameters" />
       <module name="lesson4-spring-boot" options="-parameters" />
+      <module name="lesson5-fisunov" options="-parameters" />
     </option>
   </component>
 </project>
