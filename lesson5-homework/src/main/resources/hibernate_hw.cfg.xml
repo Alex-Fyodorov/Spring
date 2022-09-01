@@ -17,5 +17,7 @@
         <property name="hibernate.format_sql">true</property>
 
         <mapping class="fyodorov.model.Product"/>
+        <mapping class="fyodorov.model.Cart"/>
+        <mapping class="fyodorov.model.User"/>
     </session-factory>
 </hibernate-configuration>

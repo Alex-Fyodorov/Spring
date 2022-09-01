@@ -70,9 +70,9 @@ public class ProductController {
         return "redirect:/product";
     }
 
-    @GetMapping("/end")
-    public String shutdown() {
-        productRepository.shutdown();
-        return "redirect:/product/cart";
-    }
+//    @GetMapping("/end")
+//    public String shutdown() {
+//        productRepository.shutdown();
+//        return "redirect:/product/cart";
+//    }
 }
