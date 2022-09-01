@@ -1,0 +1,8 @@
+server:
+  port: 8090
+  servlet:
+    context-path: /hw5
+logging:
+  level:
+    fyodorov:
+      controller: info
