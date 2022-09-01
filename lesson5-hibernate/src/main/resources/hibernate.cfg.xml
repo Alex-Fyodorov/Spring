@@ -10,12 +10,17 @@
         <property name="connection.password">root</property>
         <property name="connection.pool_size">1</property>
         <property name="current_session_context_class">thread</property>
-        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.hbm2ddl.auto">create-drop</property>
 
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
         <property name="hibernate.format_sql">true</property>
 
-        <mapping class="fyodorov.User"/>
+        <mapping class="fyodorov.model.User"/>
+        <mapping class="fyodorov.model.Contact"/>
+        <mapping class="fyodorov.model.Customer"/>
+        <mapping class="fyodorov.model.Role"/>
+        <mapping class="fyodorov.model.LineItem"/>
+        <mapping class="fyodorov.model.Product"/>
     </session-factory>
 </hibernate-configuration>

@@ -1,5 +1,6 @@
 package fyodorov;
 
+import fyodorov.model.User;
 import org.hibernate.cfg.Configuration;
 
 import javax.persistence.EntityManager;

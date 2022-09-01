@@ -18,6 +18,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="lesson3-fisunov" target="14" />
+      <module name="lesson5-homework" target="14" />
       <module name="Test" target="14" />
       <module name="wrapper" target="1.5" />
     </bytecodeTargetLevel>
