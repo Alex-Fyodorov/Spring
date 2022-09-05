@@ -1,42 +1,45 @@
 package fyodorov.hw5;
 
-import fyodorov.hw5.model.UserHW;
-import fyodorov.hw5.repository.UserRepository;
-import fyodorov.hw5.repository.UserRepositoryImpl;
-
-import java.util.List;
+import fyodorov.hw5.repository.*;
+import fyodorov.hw5.repository.interfaces.ProductRepository;
+import fyodorov.hw5.repository.interfaces.UserRepository;
+import fyodorov.hw5.service.CartService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class MainHW {
     public static void main(String[] args) {
-        UserRepository userRepository = new UserRepositoryImpl();
-        userRepository.init();
 
-        userRepository.insert("Alex", 36);
-        userRepository.insert("Bob", 18);
-        userRepository.insert("Jack", 44);
+        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfiguration.class);
+        DataBaseManager dbm = context.getBean("dbm", DataBaseManager.class);
+        UserRepository userRepository = context.getBean("userRepository", UserRepositoryImpl.class);
+        ProductRepository productRepository = context.getBean("productRepository", ProductRepositoryDB.class);
+        CartService cartService = context.getBean("cartService", CartService.class);
 
-        System.out.println(userRepository.findAll());
-        System.out.println();
+        dbm.init();
+//ADD USERS
+        userRepository.insert("Alex");
+        userRepository.insert("Bob");
+        userRepository.insert("Jack");
+//ADD PRODUCTS
+        productRepository.addProduct("Milk", 89);
+        productRepository.addProduct("Bread", 39);
+        productRepository.addProduct("Cheese", 139);
+        productRepository.addProduct("Potato", 26);
+        productRepository.addProduct("Carrot", 42);
+        productRepository.addProduct("Water", 15);
 
-        UserHW user = userRepository.findById(1L);
-        System.out.println(user);
-        user.setName("John");
-        userRepository.save(user);
-        System.out.println(userRepository.findById(1L));
-        System.out.println();
+        cartService.addToCart(1L, 1L);
+        cartService.addToCart(2L, 1L);
+        cartService.addToCart(3L, 1L);
+        cartService.addToCart(6L, 1L);
+        cartService.addToCart(6L, 3L);
 
-        userRepository.deleteById(1L);
-        System.out.println(userRepository.findAll());
-        System.out.println();
+        System.out.println(cartService.getCurrentCart(1L));
+        System.out.println(cartService.sum(1L));
 
-        List<UserHW> list = userRepository.findAll();
-        for (UserHW u : list) {
-            userRepository.deleteById(u.getId());
-        }
-        System.out.println(userRepository.findAll());
-        System.out.println();
+        System.out.println(cartService.findUserByProductId(6L));
 
-        userRepository.shutdown();
+        dbm.shutdown();
     }
-
 }
