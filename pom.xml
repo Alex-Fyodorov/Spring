@@ -28,6 +28,7 @@
         <module>lesson4-spring-boot</module>
         <module>lesson5-fisunov</module>
         <module>lesson5-hibernate</module>
+        <module>lesson7-homework</module>
     </modules>
 
     <dependencies>
