@@ -1,11 +1,12 @@
-package fyodorov;
+package fyodorov.hw4;
 
+//import fyodorov.Lesson4SpringBootApplication;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Lesson4SpringBootApplication {
+public class HomeworkApp {
     public static void main(String[] args) {
-        SpringApplication.run(Lesson4SpringBootApplication.class, args);
+        SpringApplication.run(HomeworkApp.class, args);
     }
 }
