@@ -1,8 +1,9 @@
-package fyodorov.hw4.controller;
+package fyodorov.hw8.controller;
 
-import fyodorov.hw4.persist.Product;
-import fyodorov.hw4.persist.ProductRepository;
-import fyodorov.hw4.services.CartService;
+import fyodorov.hw8.persist.Product;
+import fyodorov.hw8.persist.ProductRepositoryDB;
+import fyodorov.hw8.persist.ProductRepositoryImpl;
+import fyodorov.hw8.services.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +16,7 @@ import javax.validation.Valid;
 @RequestMapping("/product")
 @RequiredArgsConstructor
 public class ProductController {
-    private final ProductRepository productRepository;
+    private final ProductRepositoryDB productRepository;
     private final CartService cartService;
 
     @GetMapping

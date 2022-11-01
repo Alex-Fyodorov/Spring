@@ -1,4 +1,4 @@
-package fyodorov.hw4.persist;
+package fyodorov.hw8.persist;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;

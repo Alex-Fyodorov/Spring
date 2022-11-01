@@ -1,8 +1,9 @@
-package fyodorov.hw4.services;
+package fyodorov.hw8.services;
 
-import fyodorov.hw4.persist.Cart;
-import fyodorov.hw4.persist.Product;
-import fyodorov.hw4.persist.ProductRepository;
+import fyodorov.hw8.persist.Cart;
+import fyodorov.hw8.persist.Product;
+import fyodorov.hw8.persist.ProductRepositoryDB;
+import fyodorov.hw8.persist.ProductRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +13,10 @@ import java.util.List;
 @Service
 public class CartService {
     private Cart cart;
-    private ProductRepository productRepository;
+    private ProductRepositoryDB productRepository;
 
     @Autowired
-    public CartService(Cart cart, ProductRepository productRepository) {
+    public CartService(Cart cart, ProductRepositoryDB productRepository) {
         this.cart = cart;
         this.productRepository = productRepository;
     }

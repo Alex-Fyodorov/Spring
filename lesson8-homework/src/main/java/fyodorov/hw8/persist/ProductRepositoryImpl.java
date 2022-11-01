@@ -1,4 +1,4 @@
-package fyodorov.hw4.persist;
+package fyodorov.hw8.persist;
 
 import org.springframework.stereotype.Repository;
 import javax.annotation.PostConstruct;
@@ -6,10 +6,11 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
-public class ProductRepository {
+public class ProductRepositoryImpl implements ProductRepository {
     private List<Product> products;
     private AtomicLong identity = new AtomicLong(0);
 
+    @Override
     @PostConstruct
     public void init(){
         this.products = new ArrayList<>();
@@ -20,14 +21,17 @@ public class ProductRepository {
         this.addProduct("Carrot", 59);
     }
 
+    @Override
     public void addProduct(String title, Integer price) {
         products.add(new Product(identity.incrementAndGet(), title, price));
     }
 
+    @Override
     public List<Product> findAll(){
         return Collections.unmodifiableList(products);
     }
 
+    @Override
     public Optional<Product> findById(Long id){
         return products.stream().filter(p -> Objects.equals(p.getId(), id)).findFirst();
     }
