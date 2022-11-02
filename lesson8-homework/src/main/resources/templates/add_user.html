@@ -26,7 +26,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#" th:text="${user.name}">List</a>
+                <a class="nav-link" href="#">List</a>
             </li>
         </ul>
     </div>
@@ -35,33 +35,15 @@
 <div class="container">
     <div class="row py-2">
         <div class="col-12">
-            <a class="btn btn-primary" th:href="@{/product/new}">Add Product</a>
-        </div>
-        <div class="col-12">
-            <table class="table table-bordered my-2">
-                <thead>
-                <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Product Title</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="product : ${products}">
-                    <th scope="row" th:text="${product.id}">1</th>
-                    <td th:text="${product.title}">Milk</td>
-                    <td th:text="${product.price}">100</td>
-                    <td>
-                        <a class="btn btn-success" th:href="@{/product/add/{user_id} (user_id = ${user.id})/{product_id}(product_id = ${product.id})}"><i class="fa fa-shopping-basket"></i></a>
-                        <a class="btn btn-danger" th:href="@{/product/remove/{id}(id = ${product.id})}"><i class="far fa-trash-alt"></i></a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="col-12">
-            <a class="btn btn-primary" th:href="@{/product/cart}">To cart</a>
+            <form  th:action="@{/user/insert}" method="post" th:object="${user}">
+                <input th:field="*{id}" type="hidden" id="id" name="id">
+                <div class="form-group">
+                    <label>User Name</label>
+                    <input th:field="*{name}" type="text" class="form-control" id="name" name="name" placeholder="Enter name of new user" >
+                    <p class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
         </div>
     </div>
 </div>

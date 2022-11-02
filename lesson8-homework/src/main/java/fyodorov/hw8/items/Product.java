@@ -1,19 +1,17 @@
-package fyodorov.hw8.persist;
+package fyodorov.hw8.items;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "products")
 public class Product {
 
@@ -30,17 +28,25 @@ public class Product {
     @Min(value = 10, message = "The price cannot be lower than 10 eurodollars")
     private int price;
 
+    @ManyToMany
+    @JoinTable(
+            name = "cart_products",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "cart_id")
+    )
+    private List<Cart> carts;
+
+    public Product() {
+        this.carts = new ArrayList<>();
+    }
+
     public Product(String title, int price) {
         this.title = title;
         this.price = price;
+        this.carts = new ArrayList<>();
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", price=" + price +
-                '}';
+    public void addCart(Cart cart) {
+        this.carts.add(cart);
     }
 }

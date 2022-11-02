@@ -1,8 +1,9 @@
 package fyodorov.hw8.controller;
 
-import fyodorov.hw8.persist.Product;
-import fyodorov.hw8.persist.ProductRepositoryDB;
-import fyodorov.hw8.persist.ProductRepositoryImpl;
+import fyodorov.hw8.items.Product;
+import fyodorov.hw8.items.User;
+import fyodorov.hw8.repositories.ProductRepositoryDB;
+import fyodorov.hw8.repositories.UserRepository;
 import fyodorov.hw8.services.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -16,44 +17,16 @@ import javax.validation.Valid;
 @RequestMapping("/product")
 @RequiredArgsConstructor
 public class ProductController {
+
     private final ProductRepositoryDB productRepository;
+    private final UserRepository userRepository;
     private final CartService cartService;
 
-    @GetMapping
-    public String productPage(Model model) {
+    @GetMapping("/{user_id}")
+    public String productPage(Model model, @PathVariable ("user_id") Long userId) {
         model.addAttribute("products", productRepository.findAll());
+        model.addAttribute("user", userRepository.findById(userId).get());
         return "product";
-    }
-
-    @GetMapping("/add/{id}")
-    public String addToCart(@PathVariable Long id) {
-        cartService.addToCartByProductId(id);
-        return "redirect:/product";
-    }
-
-    @GetMapping("/remove/{id}")
-    public String removeFromCart(@PathVariable Long id) {
-        cartService.removeFromCart(id);
-        return "redirect:/product";
-    }
-
-    @GetMapping("/cart")
-    public String cartPage(Model model) {
-        model.addAttribute("products", cartService.getCurrentCart());
-        model.addAttribute("sum", cartService.sum());
-        return "cart";
-    }
-
-    @GetMapping("/cart/add/{id}")
-    public String addToCartPage(@PathVariable Long id) {
-        cartService.addToCartByProductId(id);
-        return "redirect:/product/cart";
-    }
-
-    @GetMapping("/cart/remove/{id}")
-    public String removeFromCartPage(@PathVariable Long id) {
-        cartService.removeFromCart(id);
-        return "redirect:/product/cart";
     }
 
     @GetMapping("/new")
@@ -70,4 +43,38 @@ public class ProductController {
         productRepository.addProduct(product.getTitle(), product.getPrice());
         return "redirect:/product";
     }
+
+//    @GetMapping("/add/{user_id}/{product_id}")
+//    public String addToCart(@PathVariable ("product_id") Long productId,
+//                            @PathVariable ("user_id") Long userId) {
+//        cartService.addToCart(productId, userId);
+//        return "redirect:/user";
+//    }
+//
+//    @GetMapping("/remove/{id}")
+//    public String removeFromCart(@PathVariable Long id) {
+//        cartService.removeFromCart(id);
+//        return "redirect:/product";
+//    }
+//
+//    @GetMapping("/cart")
+//    public String cartPage(Model model) {
+//        model.addAttribute("products", cartService.getCurrentCart());
+//        model.addAttribute("sum", cartService.sum());
+//        return "cart";
+//    }
+//
+//    @GetMapping("/cart/add/{id}")
+//    public String addToCartPage(@PathVariable Long id) {
+//        cartService.addToCartByProductId(id);
+//        return "redirect:/product/cart";
+//    }
+//
+//    @GetMapping("/cart/remove/{id}")
+//    public String removeFromCartPage(@PathVariable Long id) {
+//        cartService.removeFromCart(id);
+//        return "redirect:/product/cart";
+//    }
+//
+
 }
