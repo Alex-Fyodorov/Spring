@@ -1,12 +1,7 @@
 package fyodorov.hw8.services;
 
-import fyodorov.hw8.items.Cart;
-import fyodorov.hw8.items.Product;
-import fyodorov.hw8.items.User;
-import fyodorov.hw8.repositories.CartRepository;
-import fyodorov.hw8.repositories.ProductRepositoryDB;
-import fyodorov.hw8.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import fyodorov.hw8.items.*;
+import fyodorov.hw8.repositories.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,12 +11,12 @@ import java.util.List;
 @Service
 public class CartService {
 
-    private ProductRepositoryDB productRepository;
+    private ProductRepository productRepository;
     private CartRepository cartRepository;
     private UserRepository userRepository;
 
-    public CartService(ProductRepositoryDB productRepository,
-                       UserRepository userRepository, CartRepository cartRepository) {
+    public CartService(ProductRepository productRepository,
+                       CartRepository cartRepository, UserRepository userRepository) {
         this.productRepository = productRepository;
         this.cartRepository = cartRepository;
         this.userRepository = userRepository;
@@ -32,6 +27,7 @@ public class CartService {
         if (user.getCart() == null) {
             Cart cart = new Cart(user);
             user.setCart(cart);
+            cartRepository.save(cart);
             userRepository.save(user);
         }
         return user;
@@ -39,7 +35,8 @@ public class CartService {
 
     public void addToCart(Long productId, Long userId) {
         User user = addCart(userId);
-        user.getCart().add(productRepository.findById(productId).get());
+        Product product = productRepository.findById(productId).get();
+        user.getCart().getCart().add(product);
         cartRepository.save(user.getCart());
     }
 
@@ -69,12 +66,12 @@ public class CartService {
         return Collections.unmodifiableList(user.getCart().getCart());
     }
 
-    public List<User> findUserByProductId(Long productId) {
-        List<Cart> carts = productRepository.findById(productId).get().getCarts();
-        List<User> users = new ArrayList<>();
-        for (Cart cart : carts) {
-            users.add(cart.getUser());
-        }
-        return users;
-    }
+//    public List<User> findUserByProductId(Long productId) {
+//        List<Cart> carts = cartRepository.findCartByProductId(productId);
+//        List<User> users = new ArrayList<>();
+//        for (Cart cart : carts) {
+//            users.add(cart.getUser());
+//        }
+//        return users;
+//    }
 }

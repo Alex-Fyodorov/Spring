@@ -16,11 +16,11 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "cart_products",
             joinColumns = @JoinColumn(name = "cart_id"),
@@ -51,12 +51,5 @@ public class Cart {
 
     public void clear(){
         cart.clear();
-    }
-
-    @Override
-    public String toString() {
-        return "Cart{" +
-                "products=" + cart +
-                '}';
     }
 }

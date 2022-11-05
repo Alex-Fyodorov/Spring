@@ -2,7 +2,7 @@ package fyodorov.hw8.controller;
 
 import fyodorov.hw8.items.Product;
 import fyodorov.hw8.items.User;
-import fyodorov.hw8.repositories.ProductRepositoryDB;
+import fyodorov.hw8.repositories.ProductRepository;
 import fyodorov.hw8.repositories.UserRepository;
 import fyodorov.hw8.services.CartService;
 import lombok.RequiredArgsConstructor;
@@ -12,20 +12,45 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/product")
 @RequiredArgsConstructor
 public class ProductController {
 
-    private final ProductRepositoryDB productRepository;
+    private final ProductRepository productRepository;
     private final UserRepository userRepository;
     private final CartService cartService;
 
-    @GetMapping("/{user_id}")
-    public String productPage(Model model, @PathVariable ("user_id") Long userId) {
-        model.addAttribute("products", productRepository.findAll());
-        model.addAttribute("user", userRepository.findById(userId).get());
+    @GetMapping
+    public String productPage(
+            Model model,
+            @RequestParam(required = false) Integer min,
+            @RequestParam(required = false) Integer max
+    ) {
+        List<Product> productList;
+        if (min != null) {
+            if (max != null) {
+                productList = productRepository.findProductByPriceBetween(min, max);
+            } else {
+                productList = productRepository.findProductByPriceGreaterThan(min);
+            }
+        } else {
+            if (max != null) {
+                productList = productRepository.findProductByPriceBetween(Integer.valueOf(0), max);
+            } else {
+                productList = productRepository.findAll();
+            }
+        }
+        model.addAttribute("products", productList);
+        return "product";
+    }
+
+    @GetMapping("/{id}")
+    public String productSingle(Model model, @PathVariable Long id) {
+        model.addAttribute("products", productRepository.findById(id).get());
         return "product";
     }
 
@@ -40,21 +65,27 @@ public class ProductController {
         if (bindingResult.hasErrors()) {
             return "add_product";
         }
-        productRepository.addProduct(product.getTitle(), product.getPrice());
+        productRepository.save(new Product(product.getTitle(), product.getPrice()));
         return "redirect:/product";
     }
+
+    @GetMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable Long id) {
+        productRepository.deleteById(id);
+        return "redirect:/product";
+    }
+
+//    @GetMapping("/remove/{id}")
+//    public String removeFromCart(@PathVariable Long id) {
+//        cartService.removeFromCart(id);
+//        return "redirect:/product";
+//    }
 
 //    @GetMapping("/add/{user_id}/{product_id}")
 //    public String addToCart(@PathVariable ("product_id") Long productId,
 //                            @PathVariable ("user_id") Long userId) {
 //        cartService.addToCart(productId, userId);
 //        return "redirect:/user";
-//    }
-//
-//    @GetMapping("/remove/{id}")
-//    public String removeFromCart(@PathVariable Long id) {
-//        cartService.removeFromCart(id);
-//        return "redirect:/product";
 //    }
 //
 //    @GetMapping("/cart")

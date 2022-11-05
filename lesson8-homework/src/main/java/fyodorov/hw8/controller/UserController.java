@@ -31,12 +31,12 @@ public class UserController {
         return "add_user";
     }
 
-    @PostMapping("/insert")
-    public String saveUser(@Valid User user, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "add_product";
-        }
-        userRepository.insert(user.getName());
-        return "redirect:/user";
-    }
+//    @PostMapping("/insert")
+//    public String saveUser(@Valid User user, BindingResult bindingResult) {
+//        if (bindingResult.hasErrors()) {
+//            return "add_product";
+//        }
+//        userRepository.save(user.getName());
+//        return "redirect:/user";
+//    }
 }

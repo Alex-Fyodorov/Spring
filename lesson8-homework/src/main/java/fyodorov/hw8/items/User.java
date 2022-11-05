@@ -25,7 +25,7 @@ public class User {
 
     @OneToOne(mappedBy = "user",
             cascade = {CascadeType.ALL},
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             orphanRemoval = true)
     private Cart cart;
 

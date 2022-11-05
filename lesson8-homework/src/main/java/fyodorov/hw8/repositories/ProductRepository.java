@@ -1,15 +1,21 @@
 package fyodorov.hw8.repositories;
 
+import fyodorov.hw8.items.Cart;
 import fyodorov.hw8.items.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface ProductRepository {
+@Repository
+public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    void addProduct(String title, Integer price);
+//    @Query(value = "select * from products p join cart_products where p.id = " +
+//            "(select cart_id from cart_products where product_id = :id)", nativeQuery = true)
+//    List<Cart> findCartByProductId(Long id);
 
-    List<Product> findAll();
+    List<Product> findProductByPriceBetween(int min, int max);
 
-    Optional<Product> findById(Long id);
+    List<Product> findProductByPriceGreaterThan(int min);
 }
