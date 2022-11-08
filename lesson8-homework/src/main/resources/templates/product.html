@@ -63,6 +63,21 @@
         <div class="col-12">
             <a class="btn btn-primary" th:href="@{/product/cart}">To cart</a>
         </div>
+        <div class="col-12 mt-3">
+            <form class="form-inline">
+                <div class="form-group mb-2 mr-2">
+                    <label for="min" class="sr-only">Min Price</label>
+                    <input type="number" class="form-control" id="min"
+                           name="min" placeholder="Min Price">
+                </div>
+                <div class="form-group mb-2 mr-2">
+                    <label for="max" class="sr-only">Max Price</label>
+                    <input type="number" class="form-control" id="max"
+                           name="max" placeholder="Max Price">
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">Apply</button>
+            </form>
+        </div>
     </div>
 </div>
 

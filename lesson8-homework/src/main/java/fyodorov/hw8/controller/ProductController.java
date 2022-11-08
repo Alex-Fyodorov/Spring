@@ -31,19 +31,25 @@ public class ProductController {
             @RequestParam(required = false) Integer max
     ) {
         List<Product> productList;
-        if (min != null) {
-            if (max != null) {
-                productList = productRepository.findProductByPriceBetween(min, max);
-            } else {
-                productList = productRepository.findProductByPriceGreaterThan(min);
-            }
+        if (min != null || max != null) {
+            productList = productRepository.priceFilter(min, max);
         } else {
-            if (max != null) {
-                productList = productRepository.findProductByPriceBetween(Integer.valueOf(0), max);
-            } else {
-                productList = productRepository.findAll();
-            }
+            productList = productRepository.findAll();
         }
+
+//        if (min != null) {
+//            if (max != null) {
+//                productList = productRepository.findProductByPriceBetween(min, max);
+//            } else {
+//                productList = productRepository.findProductByPriceGreaterThan(min);
+//            }
+//        } else {
+//            if (max != null) {
+//                productList = productRepository.findProductByPriceBetween(Integer.valueOf(0), max);
+//            } else {
+//                productList = productRepository.findAll();
+//            }
+//        }
         model.addAttribute("products", productList);
         return "product";
     }
