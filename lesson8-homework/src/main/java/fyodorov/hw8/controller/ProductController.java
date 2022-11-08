@@ -2,9 +2,8 @@ package fyodorov.hw8.controller;
 
 import fyodorov.hw8.items.Product;
 import fyodorov.hw8.items.User;
-import fyodorov.hw8.repositories.ProductRepository;
-import fyodorov.hw8.repositories.UserRepository;
 import fyodorov.hw8.services.CartService;
+import fyodorov.hw8.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,9 +19,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductController {
 
-    private final ProductRepository productRepository;
-    private final UserRepository userRepository;
     private final CartService cartService;
+    private final ProductService productService;
 
     @GetMapping
     public String productPage(
@@ -30,33 +28,13 @@ public class ProductController {
             @RequestParam(required = false) Integer min,
             @RequestParam(required = false) Integer max
     ) {
-        List<Product> productList;
-        if (min != null || max != null) {
-            productList = productRepository.priceFilter(min, max);
-        } else {
-            productList = productRepository.findAll();
-        }
-
-//        if (min != null) {
-//            if (max != null) {
-//                productList = productRepository.findProductByPriceBetween(min, max);
-//            } else {
-//                productList = productRepository.findProductByPriceGreaterThan(min);
-//            }
-//        } else {
-//            if (max != null) {
-//                productList = productRepository.findProductByPriceBetween(Integer.valueOf(0), max);
-//            } else {
-//                productList = productRepository.findAll();
-//            }
-//        }
-        model.addAttribute("products", productList);
+        model.addAttribute("products", productService.listOfProduct(min, max));
         return "product";
     }
 
     @GetMapping("/{id}")
     public String productSingle(Model model, @PathVariable Long id) {
-        model.addAttribute("products", productRepository.findById(id).get());
+        model.addAttribute("products", productService.findById(id));
         return "product";
     }
 
@@ -71,13 +49,13 @@ public class ProductController {
         if (bindingResult.hasErrors()) {
             return "add_product";
         }
-        productRepository.save(new Product(product.getTitle(), product.getPrice()));
+        productService.save(product.getTitle(), product.getPrice());
         return "redirect:/product";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteProduct(@PathVariable Long id) {
-        productRepository.deleteById(id);
+        productService.delete(id);
         return "redirect:/product";
     }
 
