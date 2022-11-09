@@ -4,6 +4,9 @@ import fyodorov.hw8.items.Product;
 import fyodorov.hw8.repositories.CartRepository;
 import fyodorov.hw8.repositories.ProductRepository;
 import fyodorov.hw8.repositories.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,13 +24,13 @@ public class ProductService {
         this.userRepository = userRepository;
     }
 
-    public List<Product> listOfProduct(Integer min, Integer max) {
-        List<Product> productList;
-        if (min != null || max != null) {
-            productList = productRepository.priceFilter(min, max);
-        } else {
-            productList = productRepository.findAll();
-        }
+    public Page<Product> listOfProduct(Integer min, Integer max, Integer page, Integer size, String sortField) {
+        Page<Product> productList = productRepository.priceFilter(min, max, PageRequest.of(page, size, Sort.by(sortField)));
+//        if (min != null || max != null) {
+//            productList = productRepository.priceFilter(min, max, PageRequest.of(page, size));
+//        } else {
+//            productList = productRepository.findAll();
+//        }
 
 //        if (min != null) {
 //            if (max != null) {

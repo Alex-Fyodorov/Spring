@@ -13,11 +13,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/product")
 @RequiredArgsConstructor
-public class ProductController {
+public class  ProductController {
 
     private final CartService cartService;
     private final ProductService productService;
@@ -26,9 +27,16 @@ public class ProductController {
     public String productPage(
             Model model,
             @RequestParam(required = false) Integer min,
-            @RequestParam(required = false) Integer max
+            @RequestParam(required = false) Integer max,
+            @RequestParam(required = false) Optional<Integer> page,
+            @RequestParam(required = false) Optional<Integer> size,
+            @RequestParam(required = false) Optional<String> sortField
     ) {
-        model.addAttribute("products", productService.listOfProduct(min, max));
+        Integer pageValue = page.orElse(1) - 1;
+        Integer sizeValue = size.orElse(3);
+        String sortFieldValue = sortField.orElse("id");
+        model.addAttribute("products",
+                productService.listOfProduct(min, max, pageValue, sizeValue, sortFieldValue));
         return "product";
     }
 
