@@ -1,7 +1,7 @@
 server:
   port: 8090
   servlet:
-    context-path: /spring-boot
+    context-path: /hw8
 logging:
   level:
     fyodorov:
