@@ -12,6 +12,7 @@
         <module name="lesson4-spring-boot" />
         <module name="lesson5-fisunov" />
         <module name="lesson2-spring-basics" />
+        <module name="lesson10" />
         <module name="lesson4-fisunov" />
         <module name="lesson5-hibernate" />
       </profile>
@@ -19,6 +20,7 @@
     <bytecodeTargetLevel>
       <module name="lesson3-fisunov" target="14" />
       <module name="lesson5-homework" target="14" />
+      <module name="lesson8-homework" target="14" />
       <module name="Test" target="14" />
       <module name="wrapper" target="1.5" />
     </bytecodeTargetLevel>
@@ -27,6 +29,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Test" options="-parameters" />
       <module name="lesson1-servlet-api" options="-parameters" />
+      <module name="lesson10" options="-parameters" />
       <module name="lesson2-spring-basics" options="-parameters" />
       <module name="lesson3-spring-mvc" options="-parameters" />
       <module name="lesson4-fisunov" options="-parameters" />
