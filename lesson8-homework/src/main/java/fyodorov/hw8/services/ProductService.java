@@ -26,25 +26,6 @@ public class ProductService {
 
     public Page<Product> listOfProduct(Integer min, Integer max, Integer page, Integer size, String sortField) {
         Page<Product> productList = productRepository.priceFilter(min, max, PageRequest.of(page, size, Sort.by(sortField)));
-//        if (min != null || max != null) {
-//            productList = productRepository.priceFilter(min, max, PageRequest.of(page, size));
-//        } else {
-//            productList = productRepository.findAll();
-//        }
-
-//        if (min != null) {
-//            if (max != null) {
-//                productList = productRepository.findProductByPriceBetween(min, max);
-//            } else {
-//                productList = productRepository.findProductByPriceGreaterThan(min);
-//            }
-//        } else {
-//            if (max != null) {
-//                productList = productRepository.findProductByPriceBetween(Integer.valueOf(0), max);
-//            } else {
-//                productList = productRepository.findAll();
-//            }
-//        }
         return productList;
     }
 
@@ -58,5 +39,15 @@ public class ProductService {
 
     public void delete(Long id) {
         productRepository.deleteById(id);
+    }
+
+    public List<Product> findAll() {
+        List<Product> products = productRepository.findAll();
+        return products;
+    }
+
+    public Product save(Product product) {
+        productRepository.save(product);
+        return productRepository.findByTitle(product.getTitle());
     }
 }

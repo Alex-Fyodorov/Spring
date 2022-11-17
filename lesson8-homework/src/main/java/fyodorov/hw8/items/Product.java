@@ -1,5 +1,6 @@
 package fyodorov.hw8.items;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,12 +29,13 @@ public class Product {
     @Min(value = 10, message = "The price cannot be lower than 10 eurodollars")
     private int price;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "cart_products",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "cart_id")
     )
+    @JsonIgnore
     private List<Cart> carts;
 
     public Product() {
